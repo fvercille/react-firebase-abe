@@ -46,6 +46,7 @@ body {
 
 .input-section {
   display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
@@ -129,4 +130,27 @@ body {
   color: #bbb;
   font-size: 0.9rem;
   padding: 20px 0;
+}
+
+.input-section select {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #EBF5EE;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  background: #EBF5EE;
+  color: #333;
+  transition: border 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2378A1BB' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  cursor: pointer;
+}
+
+.input-section select:focus {
+  border-color: #78A1BB;
+  background-color: white;
 }
