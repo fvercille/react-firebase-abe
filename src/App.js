@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { db } from "./firebase";
 import {
   collection,
@@ -14,6 +14,16 @@ function App() {
   const [notes, setNotes] = useState([]);
   const notesCollection = collection(db, "notes");
 
+  const fetchNotes = useCallback(async () => {
+    const data = await getDocs(notesCollection);
+    setNotes(
+      data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id
+      }))
+    );
+  }, [notesCollection]);
+
   const addNote = async () => {
     if (note.trim() === "") return;
     await addDoc(notesCollection, {
@@ -24,16 +34,6 @@ function App() {
     fetchNotes();
   };
 
-  const fetchNotes = async () => {
-    const data = await getDocs(notesCollection);
-    setNotes(
-      data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id
-      }))
-    );
-  };
-
   const deleteNote = async (id) => {
     const noteDoc = doc(db, "notes", id);
     await deleteDoc(noteDoc);
@@ -42,7 +42,7 @@ function App() {
 
   useEffect(() => {
     fetchNotes();
-  }, []);
+  }, [fetchNotes]);
 
   return (
     <div className="container">
